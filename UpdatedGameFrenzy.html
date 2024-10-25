@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameFrenzy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('images/background2-img.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.7); /* Slight transparency for better readability */
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo img {
+            width: 70px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: rotate(360deg);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #74ebd5;
+            color: #333;
+        }
+
+        /* Search bar styles */
+        .search-bar {
+            flex-grow: 1;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 25px;
+            border: none;
+            outline: none;
+            transition: width 0.4s ease;
+            font-size: 16px;
+        }
+
+        main {
+            padding: 40px 20px;
+        }
+
+        .featured-games {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .game-card {
+            width: calc(50% - 10px);
+            max-width: 350px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s;
+            overflow: hidden; /* Ensure content doesn't overflow */
+        }
+
+        .game-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-card video {
+            width: 100%;
+            max-height: 200px; /* Set a max height for the videos */
+            object-fit: cover; /* Ensure the video covers the space without stretching */
+            border-radius: 12px;
+            transition: filter 0.3s ease;
+        }
+
+        .game-card h3 {
+            margin-top: 10px;
+            font-size: 1.5em;
+            transition: color 0.3s;
+        }
+
+        .game-card h3:hover {
+            color: #74ebd5;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.7); /* Slight transparency for footer */
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .game-card {
+                width: 100%;
+            }
+
+            .featured-games {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/gamefrenzy.jpg" alt="GameFrenzy Logo">
+        </div>
+        <nav>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search games...">
+            </div>
+            <ul>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="rate.html">Rate Us</a></li>
+                <li><a href="login.html">Log In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="featured-games" id="gamesList">
+            <div class="game-card">
+                <a href="flappy_bird.html">
+                    <video muted>
+                        <source src="images/flappy-bird-game.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </a>
+                <h3>Flappy Bird</h3>
+            </div>
+
+            <div class="game-card">
+                <a href="tictactoe.html">
+                    <video muted>
+                        <source src="images/Tic Tac Toe.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </a>
+                <h3>Tic Tac Toe</h3>
+            </div>
+
+            <div class="game-card">
+                <a href="snake.html">
+                    <video muted>
+                        <source src="videos/snake-game.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </a>
+                <h3>Snake Game</h3>
+            </div>
+
+            <div class="game-card">
+                <a href="chess.html">
+                    <video muted>
+                        <source src="videos/chess.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </a>
+                <h3>Chess</h3>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 GameFrenzy. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            let filter = this.value.toUpperCase();
+            let gamesList = document.getElementById('gamesList');
+            let gameCards = gamesList.getElementsByClassName('game-card');
+
+            for (let i = 0; i < gameCards.length; i++) {
+                let gameTitle = gameCards[i].getElementsByTagName('h3')[0];
+                if (gameTitle.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    gameCards[i].style.display = "";
+                } else {
+                    gameCards[i].style.display = "none";
+                }
+            }
+        });
+
+        // Hover to play/pause video without controls
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            video.addEventListener('mouseenter', () => {
+                video.play();
+            });
+
+            video.addEventListener('mouseleave', () => {
+                video.pause();
+            });
+        });
+    </script>
+</body>
+</html>

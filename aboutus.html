@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico"/>
+    <title>About Us - GameFrenzy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #333;
+        }
+        .about-section, .team-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .team-member {
+            display: inline-block;
+            width: 30%;
+            text-align: center;
+            margin: 10px;
+            padding: 15px;
+            background: #eaeaea;
+            border-radius: 10px;
+            position: relative;
+        }
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+        .more-info {
+            display: none;
+            margin-top: 10px;
+            background: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            position: absolute;
+            width: 90%;
+            left: 5%;
+            top: 110%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>About Us</h1>
+        <p>Your one-stop destination for exciting games!</p>
+    </header>
+
+    <section class="about-section">
+        <h2>Who We Are</h2>
+        <p>At GameFrenzy, we are passionate about gaming and dedicated to providing the best gaming experience to our users. Our team comprises experienced developers, designers, and gamers who work tirelessly to bring you the latest and greatest in gaming.</p>
+    </section>
+
+    <section class="team-section">
+        <h2>Meet Our Team</h2>
+        <div class="team-member" id="member1">
+            <img src="images/Harshit.jpg" alt="Member 1">
+            <h3>Harshit</h3>
+            <p>Lead Developer</p>
+            <button onclick="toggleInfo('member1-info')">More Info</button>
+            <div class="more-info" id="member1-info">
+                <p>Harshit has over 1 years of experience in game development. he loves creating immersive worlds and engaging gameplay.</p>
+            </div>
+        </div>
+
+        <div class="team-member" id="member2">
+            <img src="images/Roshanpreet.jpg" alt="Member 2">
+            <h3>Roshanpreet</h3>
+            <p>Graphic Designer</p>
+            <button onclick="toggleInfo('member2-info')">More Info</button>
+            <div class="more-info" id="member2-info">
+                <p>Roshanpreet is a creative graphic designer who specializes in character design and game UI/UX.</p>
+            </div>
+        </div>
+        
+        <div class="team-member" id="member3">
+            <img src="images/Vinay.jpg" alt="Member 3">
+            <h3>Vinay Sharma</h3>
+            <p>Community Manager</p>
+            <button onclick="toggleInfo('member3-info')">More Info</button>
+            <div class="more-info" id="member3-info">
+                <p>Vinay Sharma engages with our community, ensuring player feedback is heard and acted upon.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function toggleInfo(infoId) {
+            const infoDiv = document.getElementById(infoId);
+            if (infoDiv.style.display === "none" || infoDiv.style.display === "") {
+                infoDiv.style.display = "block";
+            } else {
+                infoDiv.style.display = "none";
+            }
+        }
+
+        // Hide all additional info on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            const infos = document.querySelectorAll(".more-info");
+            infos.forEach(info => info.style.display = "none");
+        });
+    </script>
+</body>
+</html>

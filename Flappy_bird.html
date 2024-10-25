@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico"/>
+    <title>Flappy Bird Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .background {
+            height: 100vh;
+            width: 100vw;
+            background: url('images/background-img.png') no-repeat center fixed;
+            background-size: cover;
+        }
+        .bird {
+            height: 100px;
+            width: 130px;
+            position: fixed;
+            top: 40vh;
+            left: 30vw;
+            z-index: 100;
+            transition: top 0.1s; /* Smooth transition for bird movement */
+        }
+        .pipe_sprite {
+            position: absolute;
+            height: 70vh;
+            width: 6vw;
+            background: radial-gradient(lightgreen 50%, green);
+            border: 5px solid black;
+            left: 100vw;
+            animation: movePipe 3s linear infinite; /* Animate pipe movement */
+        }
+        @keyframes movePipe {
+            0% { left: 100vw; }
+            100% { left: -6vw; } /* Move pipe out of view */
+        }
+        .message {
+            position: absolute;
+            z-index: 10;
+            color: black;
+            top: 30%;
+            left: 50%;
+            font-size: 4em;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .score {
+            position: fixed;
+            z-index: 10;
+            height: 10vh;
+            font-size: 10vh;
+            font-weight: 100;
+            color: white;
+            -webkit-text-stroke-width: 2px;
+            -webkit-text-stroke-color: black;
+            top: 0;
+            left: 0;
+            margin: 10px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .score_val {
+            color: gold;
+            font-weight: bold;
+        }
+        @media only screen and (max-width: 1080px) {
+            .message {
+                font-size: 50px;
+                top: 50%;
+                white-space: nowrap;
+            }
+            .score {
+                font-size: 8vh;
+            }
+            .bird {
+                width: 120px;
+                height: 90px;
+            }
+            .pipe_sprite {
+                width: 14vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <img src="images/Bird.png" alt="Flappy Bird" class="bird" id="bird-1">
+    <div class="message" id="message">
+        <h3>Press Enter to Start Game</h3>
+        <p><span style="color: red;">&uarr;</span> Arrow Up to Control</p>
+    </div>
+    <div class="score">
+        <span class="score_title">Score: </span>
+        <span class="score_val" id="scoreVal">0</span>
+    </div>
+
+    <script>
+        let score = 0;
+        let isGameRunning = false;
+        const bird = document.getElementById('bird-1');
+        const message = document.getElementById('message');
+        const scoreVal = document.getElementById('scoreVal');
+        let pipes = [];
+
+        function startGame() {
+            isGameRunning = true;
+            score = 0;
+            scoreVal.textContent = score;
+            message.style.display = 'none';
+            bird.style.top = '40vh'; // Reset bird position
+            pipes = []; // Reset pipes
+            document.addEventListener('keydown', controlBird);
+            moveBird();
+            updateScore();
+            generatePipe();
+        }
+
+        function controlBird(event) {
+            if (event.key === 'ArrowUp' && isGameRunning) {
+                let birdTop = parseInt(bird.style.top);
+                if (birdTop > 0) { // Prevent bird from going out of bounds
+                    bird.style.top = (birdTop - 30) + 'px'; // Move up
+                }
+            }
+        }
+
+        function moveBird() {
+            if (isGameRunning) {
+                let birdTop = parseInt(bird.style.top);
+                bird.style.top = (birdTop + 1) + 'px'; // Simulate gravity
+                requestAnimationFrame(moveBird); // Call moveBird again for smooth animation
+                checkCollision(); // Check for collision with pipes
+            }
+        }
+
+        function updateScore() {
+            if (isGameRunning) {
+                score++;
+                scoreVal.textContent = score;
+                setTimeout(updateScore, 1000); // Update score every second
+            }
+        }
+
+        function generatePipe() {
+            if (isGameRunning) {
+                const pipe = document.createElement('div');
+                pipe.className = 'pipe_sprite';
+                const pipeHeight = Math.random() * 50 + 10; // Random height
+                pipe.style.height = pipeHeight + 'vh'; // Set pipe height
+                pipe.style.top = (70 - pipeHeight) + 'vh'; // Position the pipe
+                document.body.appendChild(pipe);
+                pipes.push(pipe); // Add pipe to the array
+                setTimeout(generatePipe, 3000); // Generate a new pipe every 3 seconds
+                movePipes(pipe); // Start moving the pipe
+            }
+        }
+
+        function movePipes(pipe) {
+            const move = setInterval(() => {
+                if (isGameRunning) {
+                    const pipeLeft = parseFloat(pipe.style.left);
+                    if (pipeLeft < -6) { // Remove pipe if it's out of view
+                        clearInterval(move);
+                        pipe.remove();
+                        pipes.shift(); // Remove the pipe from the array
+                    } else {
+                        pipe.style.left = (pipeLeft - 5) + 'vw'; // Move pipe left
+                    }
+                } else {
+                    clearInterval(move);
+                }
+            }, 50);
+        }
+
+        function checkCollision() {
+            const birdRect = bird.getBoundingClientRect();
+            pipes.forEach(pipe => {
+                const pipeRect = pipe.getBoundingClientRect();
+                // Check for collision
+                if (
+                    birdRect.left < pipeRect.right &&
+                    birdRect.right > pipeRect.left &&
+                    birdRect.top < pipeRect.bottom &&
+                    birdRect.bottom > pipeRect.top
+                ) {
+                    endGame(); // End game on collision
+                }
+            });
+        }
+
+        function endGame() {
+            isGameRunning = false;
+            message.style.display = 'block';
+            message.innerHTML = `<h3>Game Over</h3><p>Your Score: ${score}</p><p>Press Enter to Restart</p>`;
+            document.removeEventListener('keydown', controlBird);
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && !isGameRunning) {
+                startGame(); // Start the game
+            }
+        });
+    </script>
+</body>
+</html>
